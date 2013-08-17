@@ -93,11 +93,14 @@ static ssize_t show_lid_status(struct device *class,
 
 static irqreturn_t lid_interrupt_handler(int irq, void *dev_id)
 {
-	if (irq == hall_sensor_irq) {
-		LID_NOTICE("LID interrupt handler...gpio: %d..\n",
-			gpio_get_value(hall_sensor_gpio));
-		queue_delayed_work(lid_wq, &lid_hall_sensor_work, 0);
+	if (enable_lid) {
+		if (irq == hall_sensor_irq) {
+			LID_NOTICE("LID interrupt handler...gpio: %d..\n",
+				gpio_get_value(hall_sensor_gpio));
+			queue_delayed_work(lid_wq, &lid_hall_sensor_work, 0);
+		}
 	}
+
 	return IRQ_HANDLED;
 }
 
