@@ -12,6 +12,8 @@
 #include <linux/gpio_event.h>
 #include <linux/gpio.h>
 
+#include <linux/sweep2wake.h>
+
 #define LID_DEBUG		0
 #define CONVERSION_TIME_MS	50
 
@@ -112,6 +114,9 @@ static void lid_report_function(struct work_struct *dat)
 	value = gpio_get_value(hall_sensor_gpio) ? 1 : 0;
 	input_report_switch(lid_indev, SW_LID, !value);
 	input_sync(lid_indev);
+
+	if (value == 0)
+		lid_closed = 1;
 
 	LID_NOTICE("SW_LID report value = %d\n", value);
 }
