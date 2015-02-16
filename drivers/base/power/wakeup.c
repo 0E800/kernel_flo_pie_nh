@@ -16,8 +16,12 @@
 #include <linux/debugfs.h>
 #include <linux/types.h>
 #include <trace/events/power.h>
+#include <linux/moduleparam.h>
 
 #include "power.h"
+
+static bool enable_msm_hsic_ws = true;
+module_param(enable_msm_hsic_ws, bool, 0644);
 
 /*
  * If set, the suspend/hibernate code will abort transitions to a sleep state
@@ -407,6 +411,11 @@ EXPORT_SYMBOL_GPL(device_set_wakeup_enable);
 static void wakeup_source_activate(struct wakeup_source *ws)
 {
 	unsigned int cec;
+
+	if (!enable_msm_hsic_ws && !strcmp(ws->name, "msm_hsic_host")) {
+		pr_info("wakeup source msm_hsic_host activate skipped\n");
+		return;
+	}
 
 	ws->active = true;
 	ws->active_count++;
