@@ -975,7 +975,7 @@ config TOUCHSCREEN_ELAN_TF_3K
 
 config WAKE_TIMEOUT
 	tristate "Disable screen wake functions after timeout"
-	default y
+	default n
 	help
 	  Disable screen wake functions after timeout
 
