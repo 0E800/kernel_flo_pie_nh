@@ -493,14 +493,13 @@ int ieee80211_key_link(struct ieee80211_key *key,
 	/*
 	 * Silently accept key re-installation without really installing the
 	 * new version of the key to avoid nonce reuse or replay issues.
-	 */
-	if (old_key && key->conf.keylen == old_key->conf.keylen &&
+	 if (old_key && key->conf.keylen == old_key->conf.keylen &&
 	    !crypto_memneq(key->conf.key, old_key->conf.key, key->conf.keylen)) {
 		ieee80211_key_free_unused(key);
 		ret = 0;
 		goto out;
 	}
-
+*/
 	key->local = sdata->local;
 	key->sdata = sdata;
 	key->sta = sta;
@@ -514,7 +513,7 @@ int ieee80211_key_link(struct ieee80211_key *key,
 
 	ret = ieee80211_key_enable_hw_accel(key);
 
- out:
+ 
 	mutex_unlock(&sdata->local->key_mtx);
 
 	return ret;

@@ -15,6 +15,7 @@ config BT_HCISMD
 config BT_HCIBTUSB
 	tristate "HCI USB driver"
 	depends on USB
+   select BT_ATH3K
 	help
 	  Bluetooth HCI USB driver.
 	  This driver is required if you want to use Bluetooth devices with

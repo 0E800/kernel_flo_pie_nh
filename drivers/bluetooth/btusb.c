@@ -37,13 +37,13 @@
 
 #define VERSION "0.6"
 
-static int ignore_dga;
+static bool ignore_dga;
 static int ignore_csr;
 static int ignore_sniffer;
 static int disable_scofix;
 static int force_scofix;
 
-static int reset = 1;
+static bool reset = true;
 
 static struct usb_driver btusb_driver;
 
@@ -271,7 +271,7 @@ static void btusb_intr_complete(struct urb *urb)
 	}
 }
 
-static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
+static bool btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
 {
 	struct btusb_data *data = hdev->driver_data;
 	struct urb *urb;
@@ -1230,16 +1230,16 @@ module_exit(btusb_exit);
 module_param(ignore_dga, bool, 0644);
 MODULE_PARM_DESC(ignore_dga, "Ignore devices with id 08fd:0001");
 
-module_param(ignore_csr, bool, 0644);
+module_param(ignore_csr, int, 0644);
 MODULE_PARM_DESC(ignore_csr, "Ignore devices with id 0a12:0001");
 
-module_param(ignore_sniffer, bool, 0644);
+module_param(ignore_sniffer, int, 0644);
 MODULE_PARM_DESC(ignore_sniffer, "Ignore devices with id 0a12:0002");
 
-module_param(disable_scofix, bool, 0644);
+module_param(disable_scofix, int, 0644);
 MODULE_PARM_DESC(disable_scofix, "Disable fixup of wrong SCO buffer size");
 
-module_param(force_scofix, bool, 0644);
+module_param(force_scofix, int, 0644);
 MODULE_PARM_DESC(force_scofix, "Force fixup of wrong SCO buffers size");
 
 module_param(reset, bool, 0644);
